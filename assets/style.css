@@ -1,0 +1,30 @@
+* {
+
+}
+
+.contain {
+    padding-top: .1rem;
+    padding-bottom: .2rem;
+}
+
+.style1 {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    background-color: rgb(176, 167, 255);
+    height: 6rem;
+    width: 99.7vw;
+}
+
+.nav-text {
+    font-size: 3rem;
+    color: aliceblue;
+}
+
+.search-btn {
+    width: 12.5rem;
+}
+
+.btn-container {
+    padding-top:.2rem;
+}
