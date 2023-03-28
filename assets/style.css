@@ -2,6 +2,10 @@
 
 }
 
+.bg-gray {
+    background-color: #aeaeae;
+}
+
 .contain {
     padding-top: .1rem;
     padding-bottom: .2rem;
@@ -20,11 +24,19 @@
     font-size: 3rem;
     color: aliceblue;
 }
+ 
 
-.search-btn {
-    width: 12.5rem;
-}
 
 .btn-container {
     padding-top:.2rem;
+}
+
+.info-container {
+    height: auto;
+    border: solid;
+}
+
+.space {
+    margin-right: 1rem;
+    margin-left: 1rem;
 }
