@@ -27,7 +27,7 @@
  
 
 
-.btn-container {
+.search-btn-container {
     padding-top:.2rem;
 }
 
@@ -39,4 +39,8 @@
 .space {
     margin-right: .5rem;
     margin-left: .5rem;
+}
+
+.info {
+    height: 38.75rem;
 }
