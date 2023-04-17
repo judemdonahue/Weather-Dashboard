@@ -25,9 +25,16 @@
     color: aliceblue;
 }
  
+.btn-container {
+    max-height: 26.75rem;
+}
 
+#searchContainer {
+    max-height: 38rem;
+}
 
 .search-btn-container {
+    
     padding-top:.2rem;
 }
 

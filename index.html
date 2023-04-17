@@ -28,7 +28,7 @@
         <div class="row flex-xl-nowrap info">
             
             <!--Search Container-->
-            <div class="col-3">
+            <div id="searchContainer" class="col-3">
                 <h1 class="text-center">Search For A City:</h2>
 
                 <form class="bd-search d-flex align-items-center">
@@ -41,9 +41,11 @@
                 <form id="searchForm" class="search-btn-container">
                     <button type="button" id="searchBtn" class="btn btn-primary my-2 col-12">Search</button>
 
+                    
+
                     <hr>
 
-                    <div class="btn-container">
+                    <div id="searchList" class="btn-container">
                   <!--   
                     <button type="button" class="btn btn-secondary my-2 col-12">Atlanta</button>
 
@@ -63,6 +65,9 @@
                     </div>
 
                 </form>
+
+                <button type="button" id="clearBtn" class="btn btn-danger my-2 col-12">Clear</button>
+                
             </div>
             
              <!--Day 1 Info Container-->

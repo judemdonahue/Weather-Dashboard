@@ -14,6 +14,7 @@ var day5Img = $("#img5");
 var day6Img = $("#img6");
 
 var searchBtn = $("#searchBtn");
+var clearBtn = $("#clearBtn");
 var search = $("#userInput")
 
 $("#info-container").hide()
@@ -29,29 +30,25 @@ $("#userInput").autocomplete({
   }
 });
 
-let recentSearchesArray = JSON.parse(localStorage.getItem("recentCitiesTable"));
+let recentSearchesArray = JSON.parse(localStorage.getItem("recentCitiesTable")) || [];
 if (recentSearchesArray === null) {
   recentSearchesArray = [];
 }
 
-function fetchRequest() {
+function fetchRequest(userSearch) {
 
-  var search = $("#userInput").val() + " ";
-  var citySearch = $("#userInput").val()
-
-
-  if(cityNamesArray.includes(citySearch)) {
+  if(cityNamesArray.includes(userSearch)) {
     console.log('Valid city name entered.');
     $("#info-container").show()
-  $("#forecast-container").show()
+    $("#forecast-container").show()
 
-
-  var userSearch = search
   var requestUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${userSearch}&appid=561ba66c8fb7676c4035b87bda0066fb&units=imperial`;
 
   //Push Items to localStorage
-  recentSearchesArray.push({city:$("#userInput").val()});
-  localStorage.setItem("recentCitiesTable", JSON.stringify(recentSearchesArray));
+  if (cityNamesArray.includes(userSearch)) {
+    recentSearchesArray.push($("#userInput").val());
+    localStorage.setItem("recentCitiesTable", JSON.stringify(recentSearchesArray));
+  }
   searchHistory()
 
 //5 DAY FORECAST API CALL
@@ -74,7 +71,7 @@ function fetchRequest() {
     console.log(humidity);
 
     //inputs fetch request info into DOM 
-    day1[0].text(userSearch.charAt(0).toUpperCase() + userSearch.slice(1) + (data.list[0].dt_txt.slice(0, -8)));
+    day1[0].text(userSearch.charAt(0).toUpperCase() + userSearch.slice(1) + " " + (data.list[0].dt_txt.slice(0, -8)));
     day1[1].text("Temp: " + (data.list[0].main.temp) + "ºF");
     day1[2].text("Wind: " + (data.list[0].wind.speed) + " mph");
     day1[3].text("Humidity: " + (data.list[0].main.humidity) + "%");
@@ -126,39 +123,79 @@ function fetchRequest() {
 
 //Search Function
 searchBtn.click(function () {
-  fetchRequest();
+
+  var search = $("#userInput").val();
+  
+  var userSearch = search
+
+  if (userSearch === "") {
+    return;
+}
+
+  fetchRequest(userSearch);
 
 })
-
-var form = $("#searchForm")
-
-form.submit(function (event) {
-  event.preventDefault();
-  fetchRequest();
-  console.log("TEST")
-});
 
 
 //Appends Buttons to Recent Searches
 function searchHistory() {
   var recentSearchesArray = JSON.parse(localStorage.getItem("recentCitiesTable"));
+  var maxBtns = 7; 
+  var numBtns = 0; 
   $(".btn-container").empty();
 
-  for (i = 0; i < recentSearchesArray.length; i++) {
-    var appendBlock = `<button type="button" id="recentSearch" class="btn btn-secondary my-2 col-12"> ${recentSearchesArray[i].city} </button>`;
-    $(".btn-container").append(appendBlock);
-  } 
+  if (recentSearchesArray !== null && recentSearchesArray.length > 0) {
+    for (i = 0; i < recentSearchesArray.length; i++) {
+      var appendBlock = `<button type="button" id="recentSearch" class="btn btn-secondary my-2 col-12"> ${recentSearchesArray[i]} </button>`;
+      $(".btn-container").append(appendBlock);
+      numBtns++;
+
+      if (numBtns > maxBtns) {
+        $(".btn-container button").first().remove();
+        numBtns--;
+      }
+    } 
+  }
 };
+
+//clears search bar when clicked to improve user interface
+$("#userInput").click(function () {
+  $("#userInput").val("");
+})
+
 searchHistory()
 
+$("#searchList").on("click", "button", function(event) {
+  event.preventDefault();
 
+  var userSearch = $(this).text().trim();
+  $("#userInput").val(userSearch)
+
+
+  console.log(userSearch)
+
+  fetchRequest(userSearch)
+})
+
+clearBtn.click(function () {
+  $(".btn-container").empty();
+  recentSearchesArray = [];
+  localStorage.setItem("recentCitiesTable", JSON.stringify(recentSearchesArray));
+})
+
+
+
+/*
 var recentBtn = $("#recentSearch");
 
 recentBtn.click(function () {
+  var recentSearchesArray = JSON.parse(localStorage.getItem("recentCitiesTable")) + " ";
+  var myItem = recentSearchesArray[3]
+  console.log(myItem);
   fetchRequest();
 });
 
-
+*/
 
 
 
